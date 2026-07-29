@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f4f2ec">
+    <title>Người Bạn Thông Thái</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=DM+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2218%22 fill=%22%232f5bea%22/><path d=%22M14 27 32 18l18 9-18 9-18-9Zm7 5v10c6 5 16 5 22 0V32%22 fill=%22none%22 stroke=%22white%22 stroke-width=%224%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="app-shell">
+        <aside class="intro-panel" aria-label="Giới thiệu trợ lý">
+            <div class="brand">
+                <div class="brand-mark" aria-hidden="true">
+                    <svg viewBox="0 0 32 32" role="img">
+                        <path d="M5 13.5 16 8l11 5.5L16 19 5 13.5Z"/>
+                        <path d="M9 16.5v6c3.8 3.2 10.2 3.2 14 0v-6"/>
+                    </svg>
+                </div>
+                <div>
+                    <p class="eyebrow">Trợ lý học tập</p>
+                    <h1>Người Bạn Thông Thái</h1>
+                </div>
+            </div>
+
+            <div class="intro-copy">
+                <span class="edition">AI đồng hành học tập</span>
+                <h2>Học dễ hiểu hơn,<br>từng câu hỏi một.</h2>
+                <p>Giải thích bài tập, hỗ trợ lập trình và cùng bạn xây dựng kế hoạch ôn tập.</p>
+            </div>
+
+            <div class="suggestions" aria-label="Câu hỏi gợi ý">
+                <p class="suggestion-label">Bạn có thể thử</p>
+                <button class="suggestion-chip" type="button" data-prompt="Giải thích cho mình một khái niệm khó theo cách thật dễ hiểu.">
+                    <span>01</span> Giải thích một khái niệm
+                </button>
+                <button class="suggestion-chip" type="button" data-prompt="Giúp mình lập kế hoạch ôn tập hiệu quả cho tuần này.">
+                    <span>02</span> Lập kế hoạch ôn tập
+                </button>
+                <button class="suggestion-chip" type="button" data-prompt="Hãy xem và hướng dẫn mình sửa đoạn code đang gặp lỗi.">
+                    <span>03</span> Hỗ trợ sửa code
+                </button>
+            </div>
+
+            <p class="intro-note">Hỏi tự nhiên như đang trò chuyện với một người bạn.</p>
+        </aside>
+
+        <section class="chat-panel" aria-label="Trò chuyện với Người Bạn Thông Thái">
+            <header class="chat-header">
+                <div class="assistant-info">
+                    <div class="assistant-avatar" aria-hidden="true">NB</div>
+                    <div>
+                        <h2>Người Bạn Thông Thái</h2>
+                        <p><span class="status-dot"></span>Sẵn sàng hỗ trợ</p>
+                    </div>
+                </div>
+                <button id="clear-btn" class="clear-btn" type="button" title="Xóa cuộc trò chuyện" aria-label="Xóa cuộc trò chuyện">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 7h16M9 7V4h6v3m3 0-1 13H7L6 7m4 4v5m4-5v5"/>
+                    </svg>
+                </button>
+            </header>
+
+            <div class="chat-messages" id="chat-messages" aria-live="polite">
+                <div class="message bot-message">
+                    <div class="message-label">Bạn thông thái</div>
+                    <div class="message-content">
+                        Xin chào! Mình có thể giúp bạn giải đáp bài tập, học lập trình hoặc chuẩn bị cho kỳ thi. Hôm nay bạn muốn bắt đầu với điều gì?
+                    </div>
+                    <div class="message-time">Bây giờ</div>
+                </div>
+            </div>
+
+            <footer class="chat-input-area">
+                <div id="attachment-preview" class="attachment-preview" hidden>
+                    <div class="file-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7V3Zm7 0v5h5"/></svg>
+                    </div>
+                    <div class="file-meta">
+                        <strong id="attachment-name"></strong>
+                        <span id="attachment-size"></span>
+                    </div>
+                    <button id="remove-file-btn" class="remove-file-btn" type="button" aria-label="Bỏ file đã chọn">×</button>
+                </div>
+                <form id="chat-form">
+                    <input id="file-input" type="file" hidden accept=".pdf,.docx,.txt,.md,.csv,.json,.xml,.yaml,.yml,.py,.js,.ts,.html,.css,.java,.c,.cpp,.sql,.log,.png,.jpg,.jpeg,.webp">
+                    <button id="attach-btn" class="composer-tool" type="button" title="Đính kèm file" aria-label="Đính kèm file">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="m9 12 5.2-5.2a3 3 0 0 1 4.2 4.2l-7.8 7.8a5 5 0 0 1-7.1-7.1l8.2-8.2"/>
+                        </svg>
+                    </button>
+                    <label class="sr-only" for="user-input">Nhập câu hỏi</label>
+                    <textarea id="user-input" rows="1" placeholder="Hỏi Người Bạn Thông Thái..." autocomplete="off"></textarea>
+                    <button id="mic-btn" class="composer-tool" type="button" title="Nhập bằng giọng nói" aria-label="Bắt đầu nhập bằng giọng nói">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 15a4 4 0 0 0 4-4V7a4 4 0 0 0-8 0v4a4 4 0 0 0 4 4Zm-7-4a7 7 0 0 0 14 0M12 18v3m-3 0h6"/>
+                        </svg>
+                    </button>
+                    <button type="submit" id="send-btn" aria-label="Gửi câu hỏi">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="m5 12 14-7-4.5 14-3-6.5L5 12Z"/>
+                        </svg>
+                    </button>
+                </form>
+                <p id="input-hint" class="input-hint">Enter để gửi · Shift + Enter để xuống dòng · File tối đa 10 MB</p>
+            </footer>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
